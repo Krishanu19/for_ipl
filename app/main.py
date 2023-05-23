@@ -27,9 +27,9 @@ def execBigquery():
     client = bigquery.Client()
     query_job = client.query(query)
     result_data = query_job.result()
-    result_dict = {'data' : result_data}
-    result_json_data = json.dumps(result_dict)
-    return result_json_data
+    # result_dict = {'data' : result_data}
+    # result_json_data = json.dumps(result_dict)
+    return result_data
 
 @app.get("/get_historical_data")
 def get_historical_orders_data():
