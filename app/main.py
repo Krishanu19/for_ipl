@@ -25,9 +25,9 @@ app = FastAPI(
 def execBigquery():
     query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical'"
     client = bigquery.Client()
-    result = client.query(query)
-    #query_job.result()
-    result_dict = {'data' : result}
+    query_job = client.query(query)
+    result_data = query_job.result()
+    result_dict = {'data' : result_data}
     result_json_data = json.dumps(result_dict)
     return result_json_data
 
