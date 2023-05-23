@@ -29,7 +29,7 @@ def execBigquery():
     # result_data = query_job.result()
     # result_dict = {'data' : result_data}
     # result_json_data = json.dumps(result_dict)
-    return query_job
+    return vars(query_job)
 
 @app.get("/get_historical_data")
 def get_historical_orders_data():
