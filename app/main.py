@@ -3,6 +3,7 @@ import json
 from fastapi import FastAPI
 import google.auth
 from google.cloud import bigquery
+import pandas
 #from google.cloud.bigquery.table import TimePartitioning
 
 #logger = logging.getLogger()
@@ -26,14 +27,13 @@ def execBigquery():
     query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical'"
     client = bigquery.Client()
     query_job = client.query(query)
-    # result_data = query_job.result()
-    # result_dict = {'data' : result_data}
-    # result_json_data = json.dumps(result_dict)
-    return query_job
+    result_data = query_job.result()
+    if result_data.total_rows > 0:
+        df = result_data.to_dataframe()
+        return df.to_json(orient='records', force_ascii=False)
+
 
 @app.get("/get_historical_data")
 def get_historical_orders_data():
-    query_job = execBigquery()
-    return {'Job_id': query_job.job_id,
-            'Job_State': query_job.state,
-            'Bytes processed': query_job.total_bytes_processed}
+    result_df = execBigquery()
+    return result_df
