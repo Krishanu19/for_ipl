@@ -3,7 +3,7 @@ import json
 from fastapi import FastAPI
 import google.auth
 from google.cloud import bigquery
-import pandas
+# import pandas
 #from google.cloud.bigquery.table import TimePartitioning
 
 #logger = logging.getLogger()
