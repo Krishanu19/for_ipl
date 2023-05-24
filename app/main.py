@@ -24,7 +24,7 @@ app = FastAPI(
 
 
 def execBigquery():
-    query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical'"
+    query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical' and order_id in (6,8)"
     client = bigquery.Client()
     query_job = client.query(query)
     result_data = query_job.result()
