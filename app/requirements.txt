@@ -5,3 +5,4 @@ google-cloud-bigquery==2.24.0
 google-auth==2.6.6
 pytz
 pandas
+pyarrow
