@@ -4,3 +4,4 @@ uvicorn[standard]==0.17.6
 google-cloud-bigquery==2.24.0
 google-auth==2.6.6
 pytz
+pandas
