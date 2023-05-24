@@ -36,4 +36,5 @@ def execBigquery():
 @app.get("/get_historical_data")
 def get_historical_orders_data():
     result_df = execBigquery()
+    print(type(result_df))
     return result_df
