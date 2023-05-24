@@ -29,12 +29,11 @@ def execBigquery():
     query_job = client.query(query)
     result_data = query_job.result()
     if result_data.total_rows > 0:
-        df = result_data.to_dataframe()
-        return df.to_json(orient='records', force_ascii=False)
+        result_df = result_data.to_dataframe()
+        return json.loads(result_df.to_json(orient='records', force_ascii=False))
 
 
 @app.get("/get_historical_data")
 def get_historical_orders_data():
     result_df = execBigquery()
-    print(type(result_df))
     return result_df
