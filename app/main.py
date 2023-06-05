@@ -23,7 +23,7 @@ def execBigquery(start_date: str, end_date: str):
     result_data = query_job.result()
     if result_data.total_rows > 0:
         result_df = result_data.to_dataframe()
-        return json.loads(result_df.to_json(orient='table', force_ascii=False))
+        return json.loads(result_df.to_json(orient='records', date_format='iso', force_ascii=False))
 
 
 @app.get("/get_historical_data")
