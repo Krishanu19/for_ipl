@@ -16,6 +16,7 @@ app = FastAPI(
 def execBigquery(start_date : datetime.date, end_date : datetime.date):
     query1 = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical_closed' and cast(created_at as date) between {} and {}"
     query = query1.format(start_date,end_date)
+    print(query)
     client = bigquery.Client()
     query_job = client.query(query)
     result_data = query_job.result()
