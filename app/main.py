@@ -13,7 +13,7 @@ app = FastAPI(
 )
 
 
-def execBigquery(start_date : datetime.date, end_date : datetime.date):
+def execBigquery(start_date: str, end_date: str):
     query1 = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical_closed' and cast(created_at as date) between parse_date('%Y%m%d','{}') and parse_date('%Y%m%d','{}')"
     query = query1.format(start_date,end_date)
     print(query)
@@ -26,7 +26,7 @@ def execBigquery(start_date : datetime.date, end_date : datetime.date):
 
 
 @app.get("/get_historical_data")
-def get_historical_orders_data(start_date: datetime.date = Query(..., alias="Start Date"),
-                               end_date: datetime.date = Query(..., alias="End Date")):
+def get_historical_orders_data(start_date: str = Query(..., alias="Start Date(YYYYMMDD)"),
+                               end_date: str = Query(..., alias="End Date(YYYYMMDD)")):
     result_df = execBigquery(start_date,end_date)
     return result_df
