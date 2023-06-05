@@ -1,18 +1,8 @@
 import json
-#import logging
-from fastapi import FastAPI
+import datetime
+from fastapi import FastAPI, Query
 import google.auth
 from google.cloud import bigquery
-#import pandas
-#from google.cloud.bigquery.table import TimePartitioning
-
-#logger = logging.getLogger()
-#logger.setLevel(logging.ERROR)
-#from google.oauth2 import service_account
-#import os 
-
-#destination_project = "gcp-project-100"
-#destination_dataset = "Test"
 
 app = FastAPI(
     title="API Busters for Retail",
@@ -23,8 +13,8 @@ app = FastAPI(
 )
 
 
-def execBigquery():
-    query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical' and order_id in (6,8)"
+def execBigquery(start_date : datetime.date, end_date : datetime.date):
+    query = "select * from for_ipl.api_busters_ecommerce_order_v where order_category = 'Historical' and cast(created_at as date) between start_date and end_date"
     client = bigquery.Client()
     query_job = client.query(query)
     result_data = query_job.result()
@@ -34,6 +24,7 @@ def execBigquery():
 
 
 @app.get("/get_historical_data")
-def get_historical_orders_data():
-    result_df = execBigquery()
+def get_historical_orders_data(start_date: datetime.date = Query(..., alias="Start Date"),
+                               end_date: datetime.date = Query(..., alias="End Date")):
+    result_df = execBigquery(start_date,end_date)
     return result_df
